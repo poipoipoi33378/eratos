@@ -1,0 +1,20 @@
+F
+
+Failures:
+
+  1) #prime_number 素数の抜き出し　2
+     Failure/Error: expect(eratos.prime_number(2)).to eq 2
+
+       expected: 2
+            got: nil
+
+       (compared using ==)
+     # ./spec/eratos_spec.rb:6:in `block (2 levels) in <top (required)>'
+
+Finished in 0.04059 seconds (files took 0.17727 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/eratos_spec.rb:4 # #prime_number 素数の抜き出し　2
+
