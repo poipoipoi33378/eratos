@@ -4,54 +4,35 @@ class Eratos
   def prime_number(max)
 
     #step1 検索リスト作成
-    set_serch_list(max)
-    @prime_number_list = Array.new
+    serch_list = Array.new(max){|i| i+1}
+    serch_list = serch_list - [1]#1は先に除外しておく
+    prime_number_list = Array.new
 
-    #step2
-    # 探索リストの先頭の数を素数リストに移動し、その倍数を探索リストから篩い落とす
-    #ステップ 3
-    #上記の篩い落とし操作を探索リストの先頭値がxの平方根に達するまで行う。
+    #篩い落とし操作を探索リストの先頭値がtargetの平方根に達するまで行う。
+    target = serch_list[0]
+    while target <= max**(1/2.0)
 
-    target = 0
-    while target <= max**(1/2.0) do
-      target = shake_off_multiple(max)
+      # 探索リストの先頭の数を素数リストに移動し、その倍数を探索リストから篩い落とす
+      prime_number_list =prime_number_list + [target]
+      x = 1
+      while target*x <= max do
+        serch_list = serch_list - [target*x]
+        x = x + 1
+      end
+      target = serch_list[0]
     end
 
     #ステップ 4
     #探索リストに残った数を素数リストに移動して処理終了。
-    2.upto(max) do |i|
-      if @serch_list[i] == true then
-        @prime_number_list = @prime_number_list + [i]
-      end
-    end
+    prime_number_list = prime_number_list + serch_list
 
-    return @prime_number_list
+    return prime_number_list
   end
   private
-  @serch_list
-  @prime_number_list
+end
 
-  def set_serch_list(max)
-    @serch_list = Array.new(max)
-    @serch_list[0,1] = [false,false]
-    2.upto(max) do |i|
-      @serch_list[i] = true
-    end
-  end
+if ARGV.length == 1 then
+  eratos = Eratos.new
+  eratos.prime_number(ARGV[0].to_i).each {|x| print x; print", ";}
 
-  def shake_off_multiple(max)
-
-    2.upto(max) do |i|
-      if @serch_list[i] == true then
-        @prime_number_list = @prime_number_list + [i]
-        @serch_list[i] = false
-        x = 1
-        while i*x <= max do
-          @serch_list[i*x] = false
-          x = x + 1
-        end
-        return i
-      end
-    end
-  end
 end
